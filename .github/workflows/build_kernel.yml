@@ -22,7 +22,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v5
 
       - name: Install build dependencies
         run: |
@@ -114,13 +114,12 @@ jobs:
           chmod +x extract.sh
           ./extract.sh
 
-      - name: Make a release
-        uses: softprops/action-gh-release@v1
+      - name: Upload artifacts to GitHub Release
+        uses: softprops/action-gh-release@v2
         with:
           files: |
              ${{ github.workspace }}/${{ env.ZIP_NO_KSU }}
              ${{ github.workspace }}/${{ env.ZIP_KSU }}
-          token: ${{ secrets.GITHUB_TOKEN }}
           name: KernelSU Release - ${{ env.KERNELSU_VERSION }}
           tag_name: ${{ github.run_id }}
           body: |
@@ -137,5 +136,3 @@ jobs:
                   ${{ env.buildsettings }}
                   ```
               </details>
-          draft: false
-          prerelease: false
