@@ -36,12 +36,10 @@ jobs:
           echo "USE_CCACHE=1" >> $GITHUB_ENV
 
       - name: Cache ccache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ~/.ccache
-          key: ${{ runner.os }}-ccache-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-ccache-
+          key: ${{ runner.os }}-ccache-${{ hashFiles('**/ksu_version.txt') }}
 
       - name: Clone clang and kernel sources
         run: |
